@@ -42,9 +42,9 @@
                                         (fb/send-message sender-id (fb/quick-reply-message "How would you like to spend these days?" [{:content_type "text" :title (format "%c Fun Activities" (int 127881)) :payload "TREE_MAD"} {:content_type "text" :title (format "%c Relax Practices" (int 128524)) :payload "TREE_MILD"}]))]
 
       ; MADy part
-      (= postback "TREE_MAD_SPORTS") (fb/send-message sender-id (fb/text-message (sports/randomActivity)))
-      (= postback "TREE_MAD_CREATIVITY") (fb/send-message sender-id (fb/text-message (creativity/randomActivity)))
-      (= postback "TREE_MAD_ENTERTAINMENT") (fb/send-message sender-id (fb/text-message (entertainment/randomActivity)))
+      (= postback "TREE_MAD_SPORTS") (fb/send-message sender-id (fb/quick-reply-message (sports/randomActivity) [{:content_type "text" :title (format "%c Done" (int 128077)) :payload "MAD_DONE"} {:content_type "text" :title (format "%c Skip" (int 9193)) :payload "MAD_SKIP"} {:content_type "text" :title (format "Speak to MILDy %c" (int 129417)) :payload "TREE_MILD"}]))
+      (= postback "TREE_MAD_CREATIVITY") (fb/send-message sender-id (fb/quick-reply-message (creativity/randomActivity) [{:content_type "text" :title (format "%c Done" (int 128077)) :payload "MAD_DONE"} {:content_type "text" :title (format "%c Skip" (int 9193)) :payload "MAD_SKIP"} {:content_type "text" :title (format "Speak to MILDy %c" (int 129417)) :payload "TREE_MILD"}]))
+      (= postback "TREE_MAD_ENTERTAINMENT") (fb/send-message sender-id (fb/quick-reply-message (entertainment/randomActivity) [{:content_type "text" :title (format "%c Done" (int 128077)) :payload "MAD_DONE"} {:content_type "text" :title (format "%c Skip" (int 9193)) :payload "MAD_SKIP"} {:content_type "text" :title (format "Speak to MILDy %c" (int 129417)) :payload "TREE_MILD"}]))
 
       ; MILDy part
       (= postback "TREE_MILD_QUOTE")      (fb/send-message sender-id (fb/image-message (quotes/randomImage)))
@@ -73,6 +73,17 @@
                                                                            [{:type "postback" :title (format "%c Quote" (int 128173)) :payload "TREE_MILD_QUOTE"}
                                                                             {:type "postback" :title (format "%c Meditation" (int 128591)) :payload "TREE_MILD_MEDITATION"}
                                                                             {:type "postback" :title (format "%c Relaxation" (int 128134)) :payload "TREE_MILD_RELAXATION"}]))
+
+      (= quick-reply-payload "MAD_DONE") (fb/send-message sender-id (fb/button-message (format "You are great %c" (int 127941))
+                                                                            [{:type "postback" :title (format "%c Sports" (int 127947)) :payload "TREE_MAD_SPORTS"}
+                                                                             {:type "postback" :title (format "%c Creativity" (int 127912)) :payload "TREE_MAD_CREATIVITY"}
+                                                                             {:type "postback" :title (format "%c Entertainment" (int 127922)) :payload "TREE_MAD_ENTERTAINMENT"}]))
+
+      (= quick-reply-payload "MAD_SKIP") (fb/send-message sender-id (fb/button-message (format "Maybe try something else? %c" (int 129300))
+                                                                           [{:type "postback" :title (format "%c Sports" (int 127947)) :payload "TREE_MAD_SPORTS"}
+                                                                            {:type "postback" :title (format "%c Creativity" (int 127912)) :payload "TREE_MAD_CREATIVITY"}
+                                                                            {:type "postback" :title (format "%c Entertainment" (int 127922)) :payload "TREE_MAD_ENTERTAINMENT"}]))
+
 
       :else (fb/send-message sender-id (fb/text-message "Sorry, I don't know how to handle that quick reply.")))))
 
