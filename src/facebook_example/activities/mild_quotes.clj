@@ -9,11 +9,10 @@
                   (format "Play chess with yourself %c or your cat %c" (int 9812) (int 128008))))
 
 (def urls (vector
-           "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRiVZKuAqLERdYuvr0_UApu78J4zxglos5yfglkOREbJoH_jKvq"
-           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWdfDEDLERkQjW9FUy-gv66MCD6fQxn_m3giSI6rzxNWZJovO"
-           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJEI6MQEIx_kH0uL0yHhWq6HGS_1aahlOZxPFn8D5t1reeb0CF6g "
-           "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSnX-Jif_qdc4NQ8Muw99yrhSAP6tJdWTFPaUuttzGZrUVbVc8J"
-           "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQf7WBiCeC6-ctxinTDHZGoAnE4toAIpmQCmJB_0bKUwKfFeICK_g"))
+           "https://raw.githubusercontent.com/botic/zombie-bot/master/resources/quotes/quote1.jpg"
+           "https://raw.githubusercontent.com/botic/zombie-bot/master/resources/quotes/quote2.jpg"
+           "https://raw.githubusercontent.com/botic/zombie-bot/master/resources/quotes/quote3.jpg"
+           "https://raw.githubusercontent.com/botic/zombie-bot/master/resources/quotes/quote4.jpg"))
 
 (defn randomActivity [] (rand-nth activities))
 
