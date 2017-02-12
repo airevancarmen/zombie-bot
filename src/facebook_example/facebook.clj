@@ -13,23 +13,25 @@
     (println "Incoming Webhook Request:")
     (println request)
     (println VERIFY_TOKEN)
-    
+
     (if (and (= (params "hub.mode") "subscribe")
              (= (params "hub.verify_token") VERIFY_TOKEN))
         {:status 200 :body (params "hub.challenge")}
         {:status 403})))
 
-(defn handle-message [request on-message on-postback on-attachments]
+(defn handle-message [request on-message on-postback on-attachments on-quickreply]
   ; TODO: IMPLEMENT APP_SECRET VALIDATION
   (println "Incoming Request:")
   (println request)
   (let [data (get-in request [:params])]
     (when (= (:object data) "page")
       (doseq [page-entry (:entry data)]
+
         (doseq [messaging-event (:messaging page-entry)]
           ; Check for message (onMessage) or postback (onPostback) here
           (cond (contains? messaging-event :postback) (on-postback messaging-event)
                 (contains? messaging-event :message) (cond (contains? (:message messaging-event) :attachments) (on-attachments messaging-event)
+                                                           (contains? (:message messaging-event) :quick_reply) (on-quickreply messaging-event)
                                                            :else (on-message messaging-event))
                 :else (println (str "Webhook received unknown messaging-event: " messaging-event))))))))
 
@@ -56,6 +58,15 @@
 (defn image-message [image-url]
   {:attachment {:type "image"
                 :payload {:url image-url}}})
+
+(defn button-message [message-text buttons]
+  {:attachment {:type "template"
+                :payload {:template_type "button"
+                          :text message-text
+                          :buttons buttons}}})
+
+(defn quick-reply-message [message-text buttons]
+   {:text message-text :quick_replies buttons})
 
 (defn text-message [message-text]
   {:text message-text})
