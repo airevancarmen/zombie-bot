@@ -2,7 +2,10 @@
   (:gen-class)
   (:require [clojure.string :as s]
             [environ.core :refer [env]]
-            [facebook-example.facebook :as fb]))
+            [facebook-example.facebook :as fb]
+            [facebook-example.activities.mad-sports :as sports]
+            [facebook-example.activities.mad-creativity :as creativity]
+            [facebook-example.activities.mad-entertainment :as entertainment]))
 
 (defn on-message [payload]
   (println "on-message payload:")
@@ -34,6 +37,10 @@
       (= postback "LETS_SAVE_MY_LIFE") [
                                         (fb/send-message sender-id (fb/text-message "Days like these are spent best with some activities."))
                                         (fb/send-message sender-id (fb/quick-reply-message "How would you like to spend these days?" [{:content_type "text" :title (format "%c Fun Activities" (int 127881)) :payload "TREE_MAD"} {:content_type "text" :title (format "%c Relax Practices" (int 128524)) :payload "TREE_MILD"}]))]
+
+      (= postback "TREE_MAD_SPORTS") (fb/send-message sender-id (fb/text-message (sports/randomActivity)))
+      (= postback "TREE_MAD_CREATIVITY") (fb/send-message sender-id (fb/text-message (creativity/randomActivity)))
+      (= postback "TREE_MAD_ENTERTAINMENT") (fb/send-message sender-id (fb/text-message (entertainment/randomActivity)))
 
       :else (fb/send-message sender-id (fb/text-message "Sorry, I don't know how to handle that postback")))))
 
